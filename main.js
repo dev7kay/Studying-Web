@@ -134,7 +134,7 @@ var app = http.createServer(function(request,response){
  
 });
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function(){
   console.log('Sever On!');
 });

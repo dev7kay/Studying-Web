@@ -46,7 +46,7 @@ var app = http.createServer(function(request,response){
         });
       }
     } else if(pathname === '/create'){
-        fs.readdir('./data', function(error, filelist){
+        fs.readdir('./data', 'utf-8', function(error, filelist){
           var title = 'WEB - create';
           var list = template.list(filelist);
           var html = template.HTML(title, list, `
@@ -70,16 +70,19 @@ var app = http.createServer(function(request,response){
           var post = qs.parse(body);
           var title = post.title;
           var description = post.description;
-          fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-            response.writeHead(302, {Location: `/?id=${title}`});
+          fs.writeFile(`data/${title}`, description, 'utf8', function(err){            
+            response.writeHead(302, {Location: `/?id=${encodeURIComponent(title)}`});
             response.end();
           })
         });
    } else if(pathname === '/update'){
-        fs.readdir('./data', function(error, filelist){
+        fs.readdir('./data', 'utf8', function(error, filelist){
           var filteredID = path.parse(queryData.id).base;
+          console.log(filteredID);
           fs.readFile(`data/${filteredID}`, 'utf8', function(err, description){
             var title = queryData.id;
+            console.log(title);
+            console.log(description);
             var list = template.list(filelist);
             var html = template.HTML(title, list,
               `
@@ -90,7 +93,8 @@ var app = http.createServer(function(request,response){
                 <p><input type="submit"></p>
               </form>
               `,
-              `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+              //`<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+              `<a href="/create">create</a>`
               );
               response.writeHead(200);
               response.end(html);
@@ -108,7 +112,7 @@ var app = http.createServer(function(request,response){
               var description = post.description;
               fs.rename(`data/${id}`, `data/${title}`, function(error){
                 fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-                  response.writeHead(302, {Location: `/?id=${title}`});
+                  response.writeHead(302, {Location: `/?id=${encodeURIComponent(title)}`});
                   response.end();
                 })
               });

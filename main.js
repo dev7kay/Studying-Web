@@ -7,10 +7,10 @@ var path = require('path');
 var sanitizerHtml = require('sanitize-html');
 var mysql = require('mysql');
 var db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '777777',
-  database: 'opentutorials'
+  host: 'us-cdbr-iron-east-02.cleardb.net',
+  user: 'b146bb005f0339',
+  password: '3860ba3e',
+  database: 'heroku_3492c0ae37ea14e'
 });
 db.connect();
  

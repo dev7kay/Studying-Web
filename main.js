@@ -1,10 +1,7 @@
 var http = require('http');
-var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 var template = require('./lib/template.js');
-var path = require('path');
-var sanitizerHtml = require('sanitize-html');
 var mysql = require('mysql');
 var db = mysql.createConnection({
   host: 'us-cdbr-iron-east-02.cleardb.net',
@@ -193,3 +190,13 @@ var port = process.env.PORT || 3000;
 app.listen(port, function(){
   console.log('Sever On!');
 });
+
+/*
+CREATE TABLE `topic` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `author` varchar(30) NOT NULL,
+  PRIMARY KEY (id)
+)
+*/
